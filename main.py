@@ -85,9 +85,14 @@ def playerLose():
 
 print("One Card Dungeon, python version")
 
+
+i = 5
+
+print(i/2)
+
 # Rules
 rules = input("Would you like to learn the rules (Y/N)?")
-if ((rules + "N").upper()[0] == "Y"):
+if (rules + "N").upper()[0] == "Y":
     showRules()
 
 theGame()
