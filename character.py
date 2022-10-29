@@ -43,9 +43,8 @@ class Character:
                 if distance == 5:
                     pointfloot = self.point.avgFloor(enemy.point)
                     pointCeil = self.point.avgCeil(enemy.point)
-
-                    if !pointfloot.isHit(things) or !pointCeil.isHit(things):
-                        return false
+                    if not pointfloot.isHit(things) or  not pointCeil.isHit(things):
+                        return False
 
 
         return  True
