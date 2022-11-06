@@ -1,5 +1,7 @@
 import random
+
 from hero import Hero
+from point import Point
 from levelMaker import Level_maker
 
 
@@ -16,12 +18,19 @@ def showRules():
 def theGame():
     levelmaker = Level_maker()
     hero = Hero()
-    print(Hero)
     for level in range(12):
+
+        print("-------------------------------------")
         print("This is level: " + str(level + 1))
+        print("-------------------------------------")
+        print("")
+        print("")
+        print("")
+
 
         monsters = levelmaker.getMonsters(level)
         pillars = levelmaker.getPillars(level)
+        levelmaker.getHeroStart(level)
 
         while len(monsters) > 0 and hero.life > 0:
 
@@ -29,28 +38,55 @@ def theGame():
             for monster in monsters:
                 print(monster)
 
+            print(Hero)
+
             # roll dice and get ekstra powers
             hero.setDicePower()
 
-            # print map
-
             # move Hero
-            attOrMov = input("(A)ttack or (M)ove")
+            movement = hero.move + hero.dieMove
+            attack = False
 
-            direction = input("Move where?")
+            direction = "X"
+            printMap(hero, monsters, pillars)
 
-            # Hero attack monsters
+            while movement > 1 and direction != "":
+                direction = input("Move {} where N/S/E/W or (A)ttack?".format(movement))
+                if ("A" == direction):
+                        monsterInRange = hero.canAttack(pillars, monsters)
+
+                        if len(monsterInRange) == 1:
+                            hero.attackMonster(monsterInRange[0])
+                            attack = True
+                        elif len(monsterInRange) > 1:
+                            for idx, monster in monsterInRange:
+                                print( monster + str(idx) )
+                            number = input("Select monster no. to attack?")
+                            hero.attackMonster(monsterInRange[int(number)])
+                            attack = True
+                else:
+                    newPoint = hero.point.move(direction)
+                    distance = newPoint.distance(hero.point)
+                    print(direction)
+                    if not newPoint.isHit(pillars): 
+                        if not newPoint.isHit(monsters):
+                            if  movement >= distance:
+                                hero.point = newPoint
+                                movement -= distance
+
+                printMap(hero, monsters, pillars)
 
             # remove dead monsters
 
             # move monsters
 
+            # how many are in range
+            #hero.canAttack
+
             # Monsters attack
 
-            # how many are in range
 
             # Calculate Hero life left
-
             print("You move and fight. You have " + str(hero.life) + " life left")
 
             if input("is monster killed? (Y/N)") == "Y":
@@ -71,6 +107,25 @@ def theGame():
     return
 
 
+def printMap(hero, monsters, pillars):
+    # print map
+    print("--------------------")
+    for i in range(5):
+        row = ""
+        for j in range(5):
+          point = Point(j, 4-i)
+          if point.samePlace(hero):
+            row += "  H  !"
+          elif point.isHit(pillars):
+            row += "[   ]!"
+          elif point.isHit(monsters):
+            row += " \X/ !"
+          else:        
+            row += "     !"
+        print("!" + row + "")
+    print("--------------------")
+
+
 def playerWin():
     print("\n\n\nOh yes, You are free and alive.")
 
@@ -86,16 +141,13 @@ def playerLose():
 print("One Card Dungeon, python version")
 
 
-i = 5
-
-print(i/2)
-
 # Rules
 rules = input("Would you like to learn the rules (Y/N)?")
 if (rules + "N").upper()[0] == "Y":
     showRules()
 
-theGame()
+theGame()   
+
 # while ("Y" == input("Try again (Y/N)".upper())):
 #    theGame()
 
