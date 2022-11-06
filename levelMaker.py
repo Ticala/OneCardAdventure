@@ -83,3 +83,6 @@ class Level_maker:
             return [dr1, dr2, dr3]
 
         return []
+
+def getHeroStart(self, level):
+    return Point(level/2, 4)
