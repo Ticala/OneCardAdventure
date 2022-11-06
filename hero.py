@@ -5,6 +5,8 @@ from point import Point
 
 class Hero(Character):
 
+    dieStrenght=0
+
     def __init__(self):
         Character.__init__(self, "Charles", 6, 1, 1, 2, 1, Point(0, 0))
 
@@ -16,11 +18,9 @@ class Hero(Character):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
         dice3 = random.randint(1, 6)
-        print(dice1)
-        print(dice2)
-        print(dice3)
+        print("{} {} {}".format(dice1,dice2,dice3))
 
-        power = input("Select powers")
+        power = input("Select powers(MSD)")
         while (len(power) != 3 and "S" not in power and "M" not in power and "D" not in power):
             power = input("Choose you power like (SMD)")
 
@@ -30,13 +30,13 @@ class Hero(Character):
 
     def setPower(self, trait, die):
         if (trait == "S"):
-            setDieStreNnght = die
+            self.dieStrenght = die
         if (trait == "M"):
-            setDieRange = die
+            self.dieMove = die
         if (trait == "D"):
-            setDieMove = die
+            self.dieDefence = die
 
-    def setPrice(self, price):
+    def setUpgrade(self, price):
         if (price[0].upper() == "H"):
             self.life = 6;
         elif (price[0].upper() == "D"):
@@ -44,4 +44,11 @@ class Hero(Character):
         elif (price[0].upper() == "A"):
             self.defence += 1
         elif (price[0].upper() == "M"):
-            selfN.defence += 1
+            self.defence += 1
+
+    def attackMonster(self, focusMonster):
+        damage = self.attack / focusMonster.defence
+        focusMonster.life -= damage
+
+    def attackmonster(self, monsterInRange):
+        return monsterInRange[0]
