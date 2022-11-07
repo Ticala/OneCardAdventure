@@ -21,7 +21,7 @@ class MyTestCase(unittest.TestCase):
         self.assertFalse(hero.canAttack(pillars, monsters))  # add assertion here
 
         print(monsters[0])
-        monsters[0].point = Point(1,1)
+        monsters[0].point = Point(1, 1)
         self.assertTrue(hero.canAttack(pillars, monsters))  # add assertion here
 
 
