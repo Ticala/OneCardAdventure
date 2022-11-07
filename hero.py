@@ -46,9 +46,12 @@ class Hero(Character):
         elif (price[0].upper() == "M"):
             self.defence += 1
 
-    def attackMonster(self, focusMonster):
-        damage = self.strength / focusMonster.defence
-        focusMonster.life -= damage
+    def attackMonster(self, monster):
+        print("Hero attack with {} {}".format(self.strength, self.dieStrenght))
+        print("Monster defends with {} ".format(monster.defence))
+        damage = (self.strength + self.dieStrenght) // monster.defence
+        monster.life -= damage
+        print("Monster takes {} damage.".format(damage))
 
     def attackmonster(self, monsterInRange):
         return monsterInRange[0]
