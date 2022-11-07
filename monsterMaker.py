@@ -4,14 +4,14 @@ from point import Point
 
 class MonsterMaker():
 
-    def getSpider(x, y):
-        return Character("Spider", 2, 5, 4, 4, 3, Point(x, y))
+    def getSpider(self, x, y):
+        return Character("Spider", 2, 5, 4, 5, 3, Point(x, y))
 
-    def getTroll(x, y):
-        return Character("Troll", 3, 3, 7, 7, 2, Point(x, y))
+    def getTroll(self, x, y):
+        return Character("Troll", 5, 3, 7, 3, 2, Point(x, y))
 
-    def getSkeleton(x, y):
-        return Character("Skeleton", 1, 3, 3, 3, 4, Point(x, y))
+    def getSkeleton(self, x, y):
+        return Character("Skeleton", 3, 5, 4, 4, 4, Point(x, y))
 
-    def getDragon(x, y):
-        return Character("Dragon", 4, 5, 5, 5, 5, Point(x, y))
+    def getDragon(self, x, y):
+        return Character("Dragon", 5, 5, 5, 5, 5, Point(x, y))

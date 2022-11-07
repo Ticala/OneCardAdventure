@@ -3,12 +3,12 @@ import math
 from point import Point
 
 class Character:
-    def __init__(self, name, life, attack, move, defends, range, point ):
+    def __init__(self, name, life, attack, defence, move, range, point):
         self.name = name
         self.life = life
-        self.attack = attack
+        self.strength = attack
+        self.defence = defence
         self.move = move
-        self.defends = defends
         self.range = range
         self.point = point
 
@@ -17,22 +17,24 @@ class Character:
           "-------------------------------\n" + \
           self.name + " has \nlife: " + str(self.life) + \
           "\n-------------------------------\n" + \
-          "|att: " + str(self.attack)   + \
-          "|ran: " + str(self.range)    + \
-          "|def: " + str(self.defends)  + \
-          "|mov: " + str(self.move)     + \
+          "|str: " + str(self.strength) + \
+          "|def: " + str(self.defence) + \
+          "|mov: " + str(self.move) + \
+          "|ran: " + str(self.range) + \
           "|" + \
-         "\n-------------------------------"
+          "\n-------------------------------"
 
     def __str__(self):
           return self.name + "(lif: " + str(self.life) + \
-          ",att: " + str(self.attack) + \
-          ",ran: " + str(self.range) + \
-          ",def: " + str(self.defends) + \
-          ",mov: " + str(self.move) + \
-          ")"
+            ",str: " + str(self.strength) + \
+            ",def: " + str(self.defence) + \
+            ",mov: " + str(self.move) + \
+                 ",ran: " + str(self.range) + \
+                 ")"
 
     def canAttack(self, pillars, enemies):
+        print("----can attack----")
+        print(self)
         enemiesInRange = []
         things = pillars + []
         for enemy in enemies:
@@ -40,7 +42,13 @@ class Character:
 
         # is enemy in range
         for enemy in enemies:
+            print(enemy.point)
+            print(self.point)
+
             distance = self.point.distance(enemy.point)
+            print(distance)
+            print(self.range)
+
             if distance > 0 and distance <= self.range:
                 #
                 #  [ ][ ][ ]   [ ][ ][M]

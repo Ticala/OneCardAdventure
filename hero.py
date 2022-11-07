@@ -8,7 +8,7 @@ class Hero(Character):
     dieStrenght=0
 
     def __init__(self):
-        Character.__init__(self, "Charles", 6, 1, 1, 2, 1, Point(0, 0))
+        Character.__init__(self, "Charles", 6, 1, 1, 1, 2, Point(0, 0))
 
     def __str__(self):
         return Character.__str__(self)
@@ -47,7 +47,7 @@ class Hero(Character):
             self.defence += 1
 
     def attackMonster(self, focusMonster):
-        damage = self.attack / focusMonster.defence
+        damage = self.strength / focusMonster.defence
         focusMonster.life -= damage
 
     def attackmonster(self, monsterInRange):
