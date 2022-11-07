@@ -110,16 +110,16 @@ def heroMove(direction, hero, monsters, movement, pillars):
 
 def heroAttack(hero, monsters, pillars):
     monsterInRange = hero.canAttack(pillars, monsters)
-    print(monsterInRange)
-    if len(monsterInRange) == 0:
+    count = len(monsterInRange)
+    if count == 0:
         print("No one to attack")
         return False
 
-    if len(monsterInRange) == 1:
+    if count == 1:
         hero.attackMonster(monsterInRange[0])
-    elif len(monsterInRange) > 1:
+    elif count > 1:
         for idx, monster in monsterInRange:
-            print(monster + str(idx))
+            print(monster.point+"--" + str(idx))
         number = input("Select monster no. to attack?")
         hero.attackMonster(monsterInRange[int(number)])
     return True
