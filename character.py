@@ -12,13 +12,25 @@ class Character:
         self.range = range
         self.point = point
 
+    def print(self):
+        return \
+          "-------------------------------\n" + \
+          self.name + " has \nlife: " + str(self.life) + \
+          "\n-------------------------------\n" + \
+          "|att: " + str(self.attack)   + \
+          "|ran: " + str(self.range)    + \
+          "|def: " + str(self.defends)  + \
+          "|mov: " + str(self.move)     + \
+          "|" + \
+         "\n-------------------------------"
+
     def __str__(self):
-        return self.name + " has \nlife: " + str(self.life) + \
-         "\nattack " + str(self.attack) + \
-         " range   " + str(self.range) + \
-         " defends " + str(self.defends) + \
-         " move    " + str(self.move) + \
-         " place   " + str(self.point)
+          return self.name + "(lif: " + str(self.life) + \
+          ",att: " + str(self.attack) + \
+          ",ran: " + str(self.range) + \
+          ",def: " + str(self.defends) + \
+          ",mov: " + str(self.move) + \
+          ")"
 
     def canAttack(self, pillars, enemies):
         enemiesInRange = []
