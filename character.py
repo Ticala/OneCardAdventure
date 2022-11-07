@@ -33,8 +33,6 @@ class Character:
                  ")"
 
     def canAttack(self, pillars, enemies):
-        print("----can attack----")
-        print(self)
         enemiesInRange = []
         things = pillars + []
         for enemy in enemies:
@@ -42,13 +40,7 @@ class Character:
 
         # is enemy in range
         for enemy in enemies:
-            print(enemy.point)
-            print(self.point)
-
             distance = self.point.distance(enemy.point)
-            print(distance)
-            print(self.range)
-
             if distance > 0 and distance <= self.range:
                 #
                 #  [ ][ ][ ]   [ ][ ][M]
