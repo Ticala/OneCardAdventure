@@ -40,7 +40,7 @@ def theGame():
 
             print(Hero)
 
-            # roll dice and get ekstra powers
+            # roll dice and get extra powers
             hero.setDicePower()
 
             # move Hero
@@ -51,7 +51,8 @@ def theGame():
             gameHelper.printMap(hero, monsters, pillars)
 
             while movement > 1 and direction != "":
-                direction = input("Move {} where N/S/E/W or (A)ttack?".format(movement))
+                print_rossetta()
+                direction = input("Move or (A)ttack?".format(movement))
                 if ("A" == direction and attack):
                     attack = heroAttack(hero, monsters, pillars)
                 else:
@@ -60,11 +61,13 @@ def theGame():
                 gameHelper.printMap(hero, monsters, pillars)
 
             # remove dead monsters
+            for monster in monsters:
+                if monster.life < 1:
+                    monsters.remove(monster)
 
             # move monsters
 
             # how many are in range
-            # hero.canAttack
 
             # Monsters attack
 
@@ -87,6 +90,14 @@ def theGame():
                     return
     playerWin()
     return
+
+
+def print_rossetta():
+    print("NW  N  NE")
+    print("  \ | /  ")
+    print("W - * - E")
+    print("  / | \  ")
+    print("SW  S  SE")
 
 
 def heroMove(direction, hero, monsters, movement, pillars):
