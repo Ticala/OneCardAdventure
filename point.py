@@ -9,7 +9,7 @@ class Point:
         return "point:(" + str(self.x) + " , " + str(self.y)+")"
 
     def distance(self, point):
-        d_normal = (self.x - point.x) ** 2 + (self.y - point.y)
+        d_normal = (self.x - point.x) ** 2 + (self.y - point.y)**2
 
         match d_normal:
             case 0:
