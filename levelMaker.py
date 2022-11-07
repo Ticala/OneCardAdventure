@@ -84,5 +84,5 @@ class Level_maker:
 
         return []
 
-def getHeroStart(self, level):
-    return Point(level/2, 4)
+    def getHeroStart(self, level):
+        return Point(level/2, 4)
