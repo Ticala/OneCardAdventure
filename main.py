@@ -35,10 +35,7 @@ def theGame():
         while len(monsters) > 0 and hero.life > 0:
 
             # print monsters
-            for monster in monsters:
-                print(monster)
-
-            print(Hero)
+            print(monsters[0])
 
             # roll dice and get extra powers
             hero.setDicePower()
@@ -52,8 +49,8 @@ def theGame():
 
             while movement > 1 and direction != "":
                 print_rossetta()
-                direction = input("Move or (A)ttack?".format(movement))
-                if ("A" == direction and attack):
+                direction = input("Move({}) or (A)ttack?".format(movement))
+                if ("A" == direction and not attack):
                     attack = heroAttack(hero, monsters, pillars)
                 else:
                     movement = heroMove(direction, hero, monsters, movement, pillars)
@@ -113,7 +110,8 @@ def heroMove(direction, hero, monsters, movement, pillars):
 
 def heroAttack(hero, monsters, pillars):
     monsterInRange = hero.canAttack(pillars, monsters)
-    if monsterInRange == 0:
+    print(monsterInRange)
+    if len(monsterInRange) == 0:
         print("No one to attack")
         return False
 
