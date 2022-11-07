@@ -42,16 +42,16 @@ def theGame():
 
             # move Hero
             movement = hero.move + hero.dieMove
-            attack = False
+            has_attacked = False
 
             direction = "X"
             gameHelper.printMap(hero, monsters, pillars)
 
-            while movement > 1 and direction != "":
-                print_rossetta()
-                direction = input("Move({}) or (A)ttack?".format(movement))
-                if ("A" == direction and not attack):
-                    attack = heroAttack(hero, monsters, pillars)
+            while ( movement > 1 or not has_attacked ) and direction != "":
+                direction = get_hero_action(has_attacked, direction, movement)
+
+                if ("A" == direction and not has_attacked):
+                    has_attacked = heroAttack(hero, monsters, pillars)
                 else:
                     movement = heroMove(direction, hero, monsters, movement, pillars)
 
@@ -66,7 +66,7 @@ def theGame():
 
             # how many are in range
 
-            # Monsters attack
+            # Monsters has_attacked
 
             # Calculate Hero life left
             print("You move and fight. You have " + str(hero.life) + " life left")
@@ -87,6 +87,18 @@ def theGame():
                     return
     playerWin()
     return
+
+
+def get_hero_action(has_attacked, direction, movement):
+    if movement > 1:
+        print_rossetta()
+        if has_attacked:
+            direction = input("Move({})".format(movement))
+        else:
+            direction = input("Move({}) or (A)ttack?".format(movement))
+    else:
+        direction = input("(A)ttack?".format(movement))
+    return direction
 
 
 def print_rossetta():
