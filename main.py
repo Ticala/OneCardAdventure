@@ -47,7 +47,7 @@ def theGame():
             direction = "X"
             gameHelper.printMap(hero, monsters, pillars)
 
-            while ( movement > 1 or not has_attacked ) and direction != "":
+            while ( movement > 1 or ( not has_attacked and direction != "A")) and direction != "":
                 direction = get_hero_action(has_attacked, direction, movement)
 
                 if ("A" == direction and not has_attacked):
