@@ -5,13 +5,33 @@ from point import Point
 class MonsterMaker():
 
     def getSpider(self, x, y):
-        return Character("Spider", 2, 5, 4, 5, 3, Point(x, y))
-
+        life = 2
+        attack = 5
+        defence = 4
+        move = 5
+        range = 3
+        return Character("Spider", life, attack, defence, move, range, Point(x, y))
+  
     def getTroll(self, x, y):
-        return Character("Troll", 5, 3, 7, 3, 2, Point(x, y))
+        life = 5
+        attack = 3
+        defence = 7
+        move = 3
+        range = 2
+        return Character("Troll", life, attack, defence, move, range, Point(x, y))
 
     def getSkeleton(self, x, y):
-        return Character("Skeleton", 3, 5, 4, 4, 4, Point(x, y))
+        life = 3
+        attack = 5
+        defence = 4
+        range = 4
+        move = 4
+        return Character("Skeleton", life, attack, defence, move, range, Point(x, y))
 
     def getDragon(self, x, y):
-        return Character("Dragon", 5, 5, 5, 5, 5, Point(x, y))
+        life = 5
+        attack = 5
+        defence = 5
+        move = 5
+        range = 5
+        return Character("Dragon", life, attack, defence, move, range, Point(x, y))
