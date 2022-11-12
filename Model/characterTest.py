@@ -18,11 +18,11 @@ class MyTestCase(unittest.TestCase):
         for pillar in pillars:
             print(pillar)
 
-        self.assertFalse(hero.canAttack(pillars, monsters))  # add assertion here
+        self.assertFalse(hero.can_attack_monster(pillars, monsters))  # add assertion here
 
         print(monsters[0])
         monsters[0].point = Point(1, 1)
-        self.assertTrue(hero.canAttack(pillars, monsters))  # add assertion here
+        self.assertTrue(hero.can_attack_monster(pillars, monsters))  # add assertion here
 
 
 if __name__ == '__main__':
