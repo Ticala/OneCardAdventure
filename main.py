@@ -19,10 +19,10 @@ def showRules():
 def theGame():
     levelmaker = Level_maker()
     hero = Hero()
-    for level in range(12):
+    for level in range(1, 13):
 
         print("-------------------------------------")
-        print("This is level: " + str(level + 1))
+        print("This is level: " + str(level))
         print("-------------------------------------")
         print("")
         print("")
@@ -36,6 +36,8 @@ def theGame():
 
             # print monsters
             print(monsters[0])
+            print(hero)
+            gameHelper.printMap(hero, monsters, pillars)
 
             # roll dice and get extra powers
             hero.setDicePower()
@@ -50,7 +52,7 @@ def theGame():
             while ( movement > 1 or ( not has_attacked and direction != "A")) and direction != "":
                 direction = get_hero_action(has_attacked, direction, movement)
 
-                if ("A" == direction and not has_attacked):
+                if "A" == direction and not has_attacked:
                     has_attacked = heroAttack(hero, monsters, pillars)
                 else:
                     movement = heroMove(direction, hero, monsters, movement, pillars)
@@ -65,8 +67,20 @@ def theGame():
             # move monsters
 
             # how many are in range
+            attackers = hero.canAttackHero(pillars, monsters)
+            attackers_count = len(attackers)
+            monster_strengh = 0
+            if attackers_count == 1:
+                monster_strengh = attackers[0].strength
+                print("A monster attack with {} strength".format( monster_strengh))
+            elif attackers_count > 1:
+                monster_strengh = attackers[0].strength * attackers_count
+                print("{} monsters attack with {} strength".format( attackers_count, monster_strengh))
 
-            # Monsters has_attacked
+            if monster_strengh >= hero.strength:
+                damage = monster_strengh // hero.getTotalStr()
+                print("Hero takes {} damage".format(damage))
+                hero.life -= damage
 
             # Calculate Hero life left
             print("You move and fight. You have " + str(hero.life) + " life left")
@@ -81,7 +95,6 @@ def theGame():
                     hero.SetPrice(price)
             else:
                 print("monster move and fight")
-                hero.life = hero.life - 1
                 if hero.life == 0:
                     playerLose()
                     return
