@@ -13,6 +13,15 @@ class Hero(Character):
     def __str__(self):
         return Character.__str__(self)
 
+    def getTotalMov(self):
+        return self.move + self.dieMove
+
+    def getTotalStr(self):
+        return self.strength + self.dieStrenght
+
+    def getTotalDef(self):
+        return self.defence + self.dieDefence
+
     def setDicePower(self):
         print("Rolling you dice")
         dice1 = random.randint(1, 6)
@@ -27,6 +36,61 @@ class Hero(Character):
         self.setPower( power[0], dice1)
         self.setPower( power[1], dice2)
         self.setPower( power[2], dice3)
+
+    def canAttackHero(self, pillars, enemies):
+        enemiesInRange = []
+        things = pillars + []
+        for enemy in enemies:
+            things.append(enemy.point)
+
+        # is enemy in range
+        for enemy in enemies:
+            distance = self.point.distance(enemy.point)
+            if distance > 0 and distance <= enemy.range:
+                if self.distance_test(distance, enemy, things):
+                    enemiesInRange.append(enemy)
+        return enemiesInRange
+
+    def can_attack_monster(self, pillars, enemies):
+        enemiesInRange = []
+        things = pillars + []
+        for enemy in enemies:
+            things.append(enemy.point)
+
+        # is enemy in range
+        for enemy in enemies:
+            distance = self.point.distance(enemy.point)
+            if distance > 0 and distance <= self.range:
+                    enemiesInRange.append(enemy)
+        return enemiesInRange
+
+
+    def distance_test(self, distance, enemy, things):
+        #
+        #  [H][M][ ]   [ ][M][ ]
+        #  [ ][ ][ ]   [H][ ][ ]
+        #
+        hitter = (distance == 2 or distance == 3)
+        #
+        #  [ ][ ][ ]   [ ][ ][M]
+        #  [H][ ][M]   [ ][ ][ ]
+        #  [ ][ ][ ]   [H][ ][ ]
+        #
+        if distance == 4 or distance == 6:
+            mpoint = self.point.avg(enemy.point)
+            if not mpoint.isHit(things):
+                hitter = True
+        #
+        #  [ ][ ][M]
+        #  [X][ ][ ]
+        #
+        if distance == 5:
+            pointfloot = self.point.avgFloor(enemy.point)
+            pointCeil = self.point.avgCeil(enemy.point)
+            if not pointfloot.isHit(things) or not pointCeil.isHit(things):
+                hitter = True
+        return hitter
+
 
     def setPower(self, trait, die):
         if (trait == "S"):

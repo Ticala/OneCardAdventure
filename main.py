@@ -134,7 +134,7 @@ def heroMove(direction, hero, monsters, movement, pillars):
 
 
 def heroAttack(hero, monsters, pillars):
-    monsterInRange = hero.canAttack(pillars, monsters)
+    monsterInRange = hero.can_attack_monster(pillars, monsters)
     count = len(monsterInRange)
     if count == 0:
         print("No one to attack")
