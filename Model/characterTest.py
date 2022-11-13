@@ -1,7 +1,7 @@
 import unittest
 
 from  hero import Hero
-from levelMaker import Level_maker
+from level_maker import Level_maker
 from point import Point
 
 

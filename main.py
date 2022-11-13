@@ -1,8 +1,9 @@
 import random
 
+from dungeon import Dungeon
 from hero import Hero
 from point import Point
-from levelMaker import Level_maker
+from level_maker import Level_maker
 import gameHelper
 
 
@@ -16,11 +17,26 @@ def showRules():
     print("")
 
 
+def find_best_place(dungeonH, dungeonM, monster):
+    point = monster.point
+    rangeM = monster.range
+    minimum = 99
+
+    for x in range(5):
+        for y in range(5):
+            valueH = dungeonH.getV(x, y)
+            valueM = dungeonM.getV(x, y)
+            if rangeM <= valueM and minimum >= valueH:
+                minimum = valueH
+                point = Point(x, y)
+
+    return point
+
+
 def theGame():
     levelmaker = Level_maker()
     hero = Hero()
     for level in range(1, 13):
-
         print("-------------------------------------")
         print("This is level: " + str(level))
         print("-------------------------------------")
@@ -49,7 +65,7 @@ def theGame():
             direction = "X"
             gameHelper.printMap(hero, monsters, pillars)
 
-            while ( movement > 1 or ( not has_attacked and direction != "A")) and direction != "":
+            while (movement > 1 or (not has_attacked and direction != "A")) and direction != "":
                 direction = get_hero_action(has_attacked, direction, movement)
 
                 if "A" == direction and not has_attacked:
@@ -59,12 +75,18 @@ def theGame():
 
                 gameHelper.printMap(hero, monsters, pillars)
 
-            # remove dead monsters
+            # remove  dead monsters
             for monster in monsters:
                 if monster.life < 1:
                     monsters.remove(monster)
 
-            # move monsters
+            for monster in monsters:
+                dungeonM = Dungeon()
+                dungeonH = Dungeon()
+
+                dungeonM.next_step(monster, monsters, pillars)
+                dungeonH.next_step(hero, monsters, pillars)
+                monster.point = find_best_place(dungeonH, dungeonM, monster)
 
             # how many are in range
             attackers = hero.canAttackHero(pillars, monsters)
@@ -72,10 +94,10 @@ def theGame():
             monster_strengh = 0
             if attackers_count == 1:
                 monster_strengh = attackers[0].strength
-                print("A monster attack with {} strength".format( monster_strengh))
+                print("A monster attack with {} strength".format(monster_strengh))
             elif attackers_count > 1:
                 monster_strengh = attackers[0].strength * attackers_count
-                print("{} monsters attack with {} strength".format( attackers_count, monster_strengh))
+                print("{} monsters attack with {} strength".format(attackers_count, monster_strengh))
 
             if monster_strengh >= hero.strength:
                 damage = monster_strengh // hero.getTotalStr()
@@ -144,10 +166,11 @@ def heroAttack(hero, monsters, pillars):
         hero.attackMonster(monsterInRange[0])
     elif count > 1:
         for idx, monster in monsterInRange:
-            print(monster.point+"--" + str(idx))
+            print(monster.point + "--" + str(idx))
         number = input("Select monster no. to attack?")
         hero.attackMonster(monsterInRange[int(number)])
     return True
+
 
 def playerWin():
     print("\n\n\nOh yes, You are free and alive.")

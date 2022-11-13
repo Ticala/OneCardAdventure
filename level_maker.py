@@ -1,7 +1,6 @@
 from monsterMaker import MonsterMaker
 from point import Point
 
-
 class Level_maker:
 
     @staticmethod
