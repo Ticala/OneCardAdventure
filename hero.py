@@ -100,7 +100,8 @@ class Hero(Character):
         if (trait == "D"):
             self.dieDefence = die
 
-    def setUpgrade(self, price):
+    def setUpgrade(self):
+        price = input("Do you want to (h)eal, or get more (m)ovement, (a)ttack or (d)efence")
         if (price[0].upper() == "H"):
             self.life = 6;
         elif (price[0].upper() == "D"):

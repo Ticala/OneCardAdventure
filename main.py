@@ -17,22 +17,6 @@ def showRules():
     print("")
 
 
-def find_best_place(dungeonH, dungeonM, monster):
-    point = monster.point
-    rangeM = monster.range
-    minimum = 99
-
-    for x in range(5):
-        for y in range(5):
-            valueH = dungeonH.getV(x, y)
-            valueM = dungeonM.getV(x, y)
-            if rangeM <= valueM and minimum >= valueH:
-                minimum = valueH
-                point = Point(x, y)
-
-    return point
-
-
 def theGame():
     levelmaker = Level_maker()
     hero = Hero()
@@ -81,12 +65,13 @@ def theGame():
                     monsters.remove(monster)
 
             for monster in monsters:
-                dungeonM = Dungeon()
-                dungeonH = Dungeon()
 
-                dungeonM.next_step(monster, monsters, pillars)
-                dungeonH.next_step(hero, monsters, pillars)
-                monster.point = find_best_place(dungeonH, dungeonM, monster)
+                if monster.point.distance(hero.point) > 3:
+                    dungeonM = Dungeon()
+                    dungeonH = Dungeon()
+                    dungeonM.next_step(monster, monsters, pillars)
+                    dungeonH.next_step(hero, monsters, pillars)
+                    monster.point = find_best_place(dungeonH, dungeonM, monster)
 
             # how many are in range
             attackers = hero.canAttackHero(pillars, monsters)
@@ -99,7 +84,9 @@ def theGame():
                 monster_strengh = attackers[0].strength * attackers_count
                 print("{} monsters attack with {} strength".format(attackers_count, monster_strengh))
 
-            if monster_strengh >= hero.strength:
+            print("Hero defends with {}".format(hero.getTotalStr()))
+
+            if monster_strengh >= hero.getTotalStr():
                 damage = monster_strengh // hero.getTotalStr()
                 print("Hero takes {} damage".format(damage))
                 hero.life -= damage
@@ -107,16 +94,11 @@ def theGame():
             # Calculate Hero life left
             print("You move and fight. You have " + str(hero.life) + " life left")
 
-            if input("is monster killed? (Y/N)") == "Y":
-                monsters.pop(0)
-                print("yeah one monster is dead\n\n")
 
-                if len(monsters) == 0:
-                    # Level up or heal
-                    price = input("Do you want to (h)eal, or get more (m)ovement, (a)ttack or (d)efence")
-                    hero.SetPrice(price)
+            if len(monsters) == 0:
+                # Level up or heal
+                hero.setUpgrade()
             else:
-                print("monster move and fight")
                 if hero.life == 0:
                     playerLose()
                     return
@@ -135,6 +117,19 @@ def get_hero_action(has_attacked, direction, movement):
         direction = input("(A)ttack?".format(movement))
     return direction
 
+def find_best_place(dungeonH, dungeonM, monster):
+    point = monster.point
+    moves = monster.move
+    minimum = 99
+    for x in range(5):
+        for y in range(5):
+            valueH = dungeonH.getV(x, y)
+            valueM = dungeonM.getV(x, y)
+            if moves >= valueM and minimum >= valueH and valueH > 0:
+                minimum = valueH
+                point = Point(x, y)
+
+    return point
 
 def print_rossetta():
     print("NW  N  NE")
