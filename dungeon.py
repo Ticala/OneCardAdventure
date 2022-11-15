@@ -20,8 +20,9 @@ class Dungeon:
         for y in range(5):
             lin = ""
             for x in range(5):
-                value = self.dungeon[x][y]
-                if value < 90 and value >-1:
+                value = self.dungeon[x][4-y]
+
+                if value > -1 and value < 10:
                     lin += " "
                 lin += " " + str(value) + " "
             print (lin)
@@ -30,17 +31,21 @@ class Dungeon:
     def next_step(self, monster, monsters, pillars):
         for pillar in pillars:
             self.dungeon[pillar.getX()][pillar.getY()] = 99
+
         for mon in monsters:
             self.dungeon[mon.getX()][mon.getY()] = 98
 
-        map = {0: [monster.point] }
+        center = monster.point
+        if self.dungeon[center.x][center.y] == -1:
+            self.dungeon[center.x][center.y] = 0
+
+        map = {0: [center]}
         for i in range(1,20):
             map.update({i: []})
 
         for i in range(20):
             points = map[i]
             for point in points:
-                print(point)
                 self.set_distance(point.x - 1, point.y, i + 2, map)
                 self.set_distance(point.x + 1, point.y, i + 2, map)
                 self.set_distance(point.x, point.y - 1, i + 2, map)
