@@ -42,13 +42,13 @@ def theGame():
             # roll dice and get extra powers
             hero.setDicePower()
 
+            # print map
+            gameHelper.printMap(hero, monsters, pillars)
+
             # move Hero
             movement = hero.move + hero.dieMove
             has_attacked = False
-
             direction = "X"
-            gameHelper.printMap(hero, monsters, pillars)
-
             while (movement > 1 or (not has_attacked and direction != "A")) and direction != "":
                 direction = get_hero_action(has_attacked, direction, movement)
 
@@ -99,7 +99,7 @@ def theGame():
                 # Level up or heal
                 hero.setUpgrade()
             else:
-                if hero.life == 0:
+                if hero.life < 1:
                     playerLose()
                     return
     playerWin()
