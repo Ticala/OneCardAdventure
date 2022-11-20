@@ -54,15 +54,14 @@ def theGame():
 
                 if "A" == direction and not has_attacked:
                     has_attacked = heroAttack(hero, monsters, pillars)
+                    for monster in monsters:
+                        if monster.life < 1:
+                            monsters.remove(monster)
                 else:
                     movement = heroMove(direction, hero, monsters, movement, pillars)
 
                 gameHelper.printMap(hero, monsters, pillars)
 
-            # remove  dead monsters
-            for monster in monsters:
-                if monster.life < 1:
-                    monsters.remove(monster)
 
             for monster in monsters:
 
@@ -160,8 +159,8 @@ def heroAttack(hero, monsters, pillars):
     if count == 1:
         hero.attackMonster(monsterInRange[0])
     elif count > 1:
-        for idx, monster in monsterInRange:
-            print(monster.point + "--" + str(idx))
+        for i in range(count):
+            print(str(monsterInRange[i].point) + "--" + str(i))
         number = input("Select monster no. to attack?")
         hero.attackMonster(monsterInRange[int(number)])
     return True
