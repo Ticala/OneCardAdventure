@@ -120,13 +120,23 @@ def find_best_place(dungeonH, dungeonM, monster):
     point = monster.point
     moves = monster.move
     minimum = 99
+    minMoves = 99
     for x in range(5):
         for y in range(5):
             valueH = dungeonH.getV(x, y)
             valueM = dungeonM.getV(x, y)
             if moves >= valueM and minimum >= valueH and valueH > 0:
-                minimum = valueH
-                point = Point(x, y)
+                if valueH == 2:
+                    minimum = 3
+                else:
+                    minimum = valueH
+
+                if minimum == 3:
+                    if minMoves > valueH:
+                        minMoves = valueH
+                        point = Point(x, y)
+                else:
+                    point = Point(x, y)
 
     return point
 
