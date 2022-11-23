@@ -83,10 +83,10 @@ def theGame():
                 monster_strengh = attackers[0].strength * attackers_count
                 print("{} monsters attack with {} strength".format(attackers_count, monster_strengh))
 
-            print("Hero defends with {}".format(hero.getTotalStr()))
+            print("Hero defends with {}".format(hero.getTotalDef()))
 
-            if monster_strengh >= hero.getTotalStr():
-                damage = monster_strengh // hero.getTotalStr()
+            if monster_strengh >= hero.getTotalDef():
+                damage = monster_strengh // hero.getTotalDef()
                 print("Hero takes {} damage".format(damage))
                 hero.life -= damage
 

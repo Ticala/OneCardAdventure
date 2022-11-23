@@ -102,13 +102,14 @@ class Hero(Character):
 
     def setUpgrade(self):
         price = input("Do you want to (h)eal, or get more (m)ovement, (a)ttack or (d)efence")
-        if (price[0].upper() == "H"):
+        price_upper = price[0].upper()
+        if (price_upper == "H"):
             self.life = 6;
-        elif (price[0].upper() == "D"):
+        elif (price_upper == "D"):
             self.defence += 1
-        elif (price[0].upper() == "A"):
+        elif (price_upper == "A"):
             self.defence += 1
-        elif (price[0].upper() == "M"):
+        elif (price_upper == "M"):
             self.defence += 1
 
     def attackMonster(self, monster):
